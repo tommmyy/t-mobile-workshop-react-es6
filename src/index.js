@@ -1,67 +1,20 @@
-(function(namespace, global) {
-	var DOMUtils = {
-		renderToElement: function(el, render, state) {
-			el.innerHTML = render(state);
-		}
-	};
+import { renderToElement } from './utils';
+import { createState, render } from './core';
 
-	var StringUtils = {
-		toUpperFirst: function(x) {
-			return x.charAt(0).toUpperCase() + x.slice(1);
-		}
-	};
+const rootElement = document.getElementById('root');
 
-	var rootElement = document.getElementById('root');
+const AppState = createState();
 
-	function createState(initialState) {
-		var state = initialState || {
-			users: []
-		};
+const rerender = renderToElement(rootElement)(render);
 
-		return {
-			addUser: function addUser(user) {
-				var users = state.users.slice(); // copy of an array
-				users.push(user);
-
-				state.users = users;
-			},
-			getUsers: function getUsers() {
-				return state.users;
-			}
-		};
-	}
-
-	var AppState = createState();
-
-	function renderUserList(users) {
-		return (
-			'<ul>' +
-			users.map(function(user) {
-				return (
-					'<li>' +
-					StringUtils.toUpperFirst(user.name) +
-					' ' +
-					StringUtils.toUpperFirst(user.surname) +
-					'</li>'
-				);
-			}).join('') +
-			'</ul>'
-		);
-	}
-
-	function render() {
-		DOMUtils.renderToElement(rootElement, renderUserList, AppState.getUsers());
-	}
-
-	global[namespace] = {
-		addUser: AppState.addUser,
-		render: render
-	};
-})('APP', window);
-
-window.APP.addUser({
-	name: 'Jan',
-	surname: 'Novák'
+AppState.addUser({
+	name: 'jan',
+	surname: 'novák'
 });
 
-window.APP.render();
+AppState.addUser({
+	name: 'Jana',
+	surname: 'Nováková'
+});
+
+rerender(AppState);
