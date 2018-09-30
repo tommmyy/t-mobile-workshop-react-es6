@@ -1,6 +1,7 @@
 module.exports = {
 	presets: [
-		['@babel/preset-env',
+		[
+			'@babel/preset-env',
 			{
 				targets: {
 					edge: '17',
@@ -8,6 +9,7 @@ module.exports = {
 					chrome: '67',
 					safari: '11.1'
 				}
-			}]
+			}
+		]
 	]
-}
+};
