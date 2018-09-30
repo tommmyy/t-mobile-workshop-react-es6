@@ -1,3 +1,3 @@
-const hello = () => 'Hello'
+const hello = () => 'Hello';
 
-Promise.resolve().then(hello)
+Promise.resolve().then(hello);
